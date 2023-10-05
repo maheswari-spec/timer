@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            background: url(pp.jpeg)no-repeat center center fixed;
+            backdrop-filter: blur(10px);
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #timer-container {
+            text-align: center; 
+        }
+        #timer {
+            font-size: 36px;
+            margin: 1px;
+            display: inline-block;
+            color: #fff;
+        }
+        #controls {
+            margin: 20px;
+            text-align: center;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .button-container button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            flex: 1; 
+        }
+        .start-button {
+            background-color: #007BFF;
+            color: #fff;
+        }
+        .start-button:hover {
+            background-color: #0056b3;
+        }
+        .stop-button {
+            background-color: #FF5733;
+            color: #fff;
+        }
+        .stop-button:hover {
+            background-color: #D94617;
+        }
+        .reset-button {
+            background-color: #32CD32;
+            color: #fff;
+        }
+        .reset-button:hover {
+            background-color: #228B22;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 768px) {
+            .button-container button {
+                width: 100%; /* Make buttons take full width on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="timer-container">
+        <div id="timer">00:00:00</div>
+        <div id="controls">
+            <div class="button-container">
+                <button class="start-button" onclick="startTimer()">Start</button>
+                <button class="stop-button" onclick="stopTimer()">Stop</button>
+                <button class="reset-button" onclick="resetTimer()">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timer;
+        let isRunning = false;
+        let seconds = 0;
+
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                timer = setInterval(updateTimer, 1000);
+            }
+        }
+
+        function stopTimer() {
+            if (isRunning) {
+                isRunning = false;
+                clearInterval(timer);
+            }
+        }
+
+        function resetTimer() {
+            stopTimer();
+            seconds = 0;
+            updateDisplay();
+        }
+
+        function updateTimer() {
+            seconds++;
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            document.getElementById("timer").innerText = `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(secs)}`;
+        }
+
+        function formatTime(time) {
+            return time < 10 ? `0${time}` : time;
+        }
+    </script>
+</body>
+</html>
